@@ -25,13 +25,15 @@ export default function WorkoutHistory({ workouts, onClose }: Props) {
 
   if (selectedWorkout) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white p-6">
-        <button
-          onClick={() => setSelectedWorkout(null)}
-          className="mb-6 text-blue-400 hover:text-blue-300 text-lg"
-        >
-          ← Back to History
-        </button>
+      <div className="min-h-screen bg-gray-900 text-white p-6 pb-10">
+        <div className="sticky top-0 z-10 bg-gray-900 -mx-6 px-6 pt-0 pb-2">
+          <button
+            onClick={() => setSelectedWorkout(null)}
+            className="text-blue-400 hover:text-blue-300 text-lg py-2 pr-4 -ml-2 touch-manipulation min-h-[44px] flex items-center"
+          >
+            ← Back to History
+          </button>
+        </div>
 
         <div className="max-w-md mx-auto">
           <h1 className="text-2xl font-bold mb-4">
@@ -82,13 +84,15 @@ export default function WorkoutHistory({ workouts, onClose }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <button
-        onClick={onClose}
-        className="mb-6 text-blue-400 hover:text-blue-300 text-lg"
-      >
-        ← Back
-      </button>
+    <div className="min-h-screen bg-gray-900 text-white p-6 pb-10">
+      <div className="sticky top-0 z-10 bg-gray-900 -mx-6 px-6 pt-0 pb-2">
+        <button
+          onClick={onClose}
+          className="text-blue-400 hover:text-blue-300 text-lg py-2 pr-4 -ml-2 touch-manipulation min-h-[44px] flex items-center"
+        >
+          ← Back
+        </button>
+      </div>
 
       <h1 className="text-3xl font-bold mb-8 text-center">Workout History</h1>
 

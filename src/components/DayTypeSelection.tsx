@@ -12,7 +12,7 @@ export default function DayTypeSelection({ onSelect, onBack }: Props) {
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <button
         onClick={onBack}
-        className="mb-6 text-blue-400 hover:text-blue-300 text-lg"
+        className="mb-4 text-blue-400 hover:text-blue-300 text-lg py-2 pr-4 -ml-2 touch-manipulation min-h-[44px] flex items-center"
       >
         ← Back
       </button>

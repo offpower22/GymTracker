@@ -23,13 +23,15 @@ export default function ExerciseList({
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <button
-        onClick={onBack}
-        className="mb-6 text-blue-400 hover:text-blue-300 text-lg"
-      >
-        ← Back
-      </button>
+    <div className="min-h-screen bg-gray-900 text-white p-6 pb-10">
+      <div className="sticky top-0 z-10 bg-gray-900 -mx-6 px-6 pt-0 pb-2">
+        <button
+          onClick={onBack}
+          className="text-blue-400 hover:text-blue-300 text-lg py-2 pr-4 -ml-2 touch-manipulation min-h-[44px] flex items-center"
+        >
+          ← Back
+        </button>
+      </div>
       <h1 className="text-3xl font-bold mb-2 text-center">{dayType} Day</h1>
       <p className="text-gray-400 text-center mb-8">Select an exercise</p>
 

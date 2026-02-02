@@ -51,13 +51,15 @@ export default function SetLogger({
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <button
-        onClick={onBack}
-        className="mb-6 text-blue-400 hover:text-blue-300 text-lg"
-      >
-        ← Back
-      </button>
+    <div className="min-h-screen bg-gray-900 text-white p-6 pb-10">
+      <div className="sticky top-0 z-10 bg-gray-900 -mx-6 px-6 pt-0 pb-2">
+        <button
+          onClick={onBack}
+          className="text-blue-400 hover:text-blue-300 text-lg py-2 pr-4 -ml-2 touch-manipulation min-h-[44px] flex items-center"
+        >
+          ← Back
+        </button>
+      </div>
 
       <h1 className="text-2xl font-bold mb-6 text-center">{exercise}</h1>
 
@@ -99,7 +101,7 @@ export default function SetLogger({
                 </span>
                 <button
                   onClick={() => removeSet(idx)}
-                  className="text-red-400 hover:text-red-300 text-xl px-2"
+                  className="text-red-400 hover:text-red-300 active:text-red-200 text-xl p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center touch-manipulation"
                 >
                   ×
                 </button>
@@ -110,40 +112,48 @@ export default function SetLogger({
       </div>
 
       <div className="max-w-md mx-auto space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Weight (lbs)
-            </label>
-            <input
-              type="number"
-              inputMode="decimal"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="0"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Reps</label>
-            <input
-              type="number"
-              inputMode="numeric"
-              value={reps}
-              onChange={(e) => setReps(e.target.value)}
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="0"
-            />
-          </div>
-        </div>
-
-        <button
-          onClick={addSet}
-          disabled={!weight || !reps}
-          className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-700 disabled:text-gray-500 text-white font-semibold py-4 px-6 rounded-xl text-xl transition-colors touch-manipulation"
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addSet();
+          }}
+          className="space-y-4"
         >
-          Add Set
-        </button>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Weight (lbs)
+              </label>
+              <input
+                type="number"
+                inputMode="decimal"
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="0"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Reps</label>
+              <input
+                type="number"
+                inputMode="numeric"
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="0"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!weight || !reps}
+            className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-700 disabled:text-gray-500 text-white font-semibold py-4 px-6 rounded-xl text-xl transition-colors touch-manipulation"
+          >
+            Add Set
+          </button>
+        </form>
 
         {sets.length > 0 && (
           <button
