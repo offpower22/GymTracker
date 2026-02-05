@@ -7,7 +7,7 @@ import type {
   ExerciseLog,
   Workout,
 } from './types';
-import { loadWorkouts, saveWorkouts } from './storage';
+import { loadWorkouts, saveWorkouts, loadDraft, saveDraft } from './storage';
 import GymSelection from './components/GymSelection';
 import DayTypeSelection from './components/DayTypeSelection';
 import ExerciseList from './components/ExerciseList';
@@ -35,13 +35,23 @@ export default function App() {
   );
   const [currentExercise, setCurrentExercise] = useState<Exercise | null>(null);
 
-  // Load workouts on mount
+  // Load workouts and any saved draft on mount
   useEffect(() => {
     const loaded = loadWorkouts();
     setWorkouts(loaded);
+
+    // Restore in-progress workout if exists
+    const draft = loadDraft();
+    if (draft) {
+      setSelectedGym(draft.gym);
+      setSelectedDay(draft.dayType);
+      setCompletedExercises(draft.exercises);
+      setScreen('exercise-list');
+    }
   }, []);
 
   const startNewWorkout = () => {
+    saveDraft(null); // Clear any existing draft
     setSelectedGym(null);
     setSelectedDay(null);
     setCompletedExercises([]);
@@ -65,16 +75,25 @@ export default function App() {
   };
 
   const handleSetsComplete = (sets: WorkoutSet[]) => {
-    if (!currentExercise) return;
+    if (!currentExercise || !selectedGym || !selectedDay) return;
 
     const exerciseLog: ExerciseLog = {
       exercise: currentExercise,
       sets,
     };
 
-    setCompletedExercises([...completedExercises, exerciseLog]);
+    const updatedExercises = [...completedExercises, exerciseLog];
+    setCompletedExercises(updatedExercises);
     setCurrentExercise(null);
     setScreen('exercise-list');
+
+    // Auto-save draft after each exercise
+    saveDraft({
+      gym: selectedGym,
+      dayType: selectedDay,
+      exercises: updatedExercises,
+      startedAt: new Date().toISOString(),
+    });
   };
 
   const handleEndWorkout = () => {
@@ -91,6 +110,7 @@ export default function App() {
     const updatedWorkouts = [...workouts, newWorkout];
     setWorkouts(updatedWorkouts);
     saveWorkouts(updatedWorkouts);
+    saveDraft(null); // Clear draft when workout is complete
 
     // Reset state
     setSelectedGym(null);

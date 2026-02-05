@@ -1,6 +1,14 @@
-import type { Workout, Exercise, WorkoutSet } from './types';
+import type { Workout, Exercise, WorkoutSet, ExerciseLog, Gym, DayType } from './types';
 
 const STORAGE_KEY = 'gym-tracker-workouts';
+const DRAFT_KEY = 'gym-tracker-draft';
+
+export interface WorkoutDraft {
+  gym: Gym;
+  dayType: DayType;
+  exercises: ExerciseLog[];
+  startedAt: string;
+}
 
 export const saveWorkouts = (workouts: Workout[]): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(workouts));
@@ -68,4 +76,22 @@ export const getMondayOfCurrentWeek = (): Date => {
   monday.setDate(today.getDate() + diff);
   monday.setHours(0, 0, 0, 0);
   return monday;
+};
+
+export const saveDraft = (draft: WorkoutDraft | null): void => {
+  if (draft) {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } else {
+    localStorage.removeItem(DRAFT_KEY);
+  }
+};
+
+export const loadDraft = (): WorkoutDraft | null => {
+  const data = localStorage.getItem(DRAFT_KEY);
+  if (!data) return null;
+  try {
+    return JSON.parse(data);
+  } catch {
+    return null;
+  }
 };
