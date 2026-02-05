@@ -2,7 +2,7 @@ export type Gym = 'CU' | '24PB' | '24LJ';
 
 export type DayType = 'Push' | 'Pull' | 'Legs';
 
-export type Exercise =
+export type KnownExercise =
   | 'Bench Press'
   | 'Dumbbell Press'
   | 'Chest Press'
@@ -16,6 +16,8 @@ export type Exercise =
   | 'Bayesian Curl'
   | 'Regular Curl'
   | 'Squats';
+
+export type Exercise = KnownExercise | (string & {});
 
 export interface WorkoutSet {
   weight: number;

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Workout } from '../types';
+import { EXERCISE_ICONS } from '../exercises';
 
 interface Props {
   workouts: Workout[];
@@ -60,6 +61,7 @@ export default function WorkoutHistory({ workouts, onClose }: Props) {
             {selectedWorkout.exercises.map((exerciseLog, idx) => (
               <div key={idx} className="bg-gray-800 rounded-lg p-4">
                 <h3 className="font-semibold text-lg mb-3">
+                  <span className="mr-2">{EXERCISE_ICONS[exerciseLog.exercise] || '🏋️'}</span>
                   {exerciseLog.exercise}
                 </h3>
                 <div className="space-y-2">

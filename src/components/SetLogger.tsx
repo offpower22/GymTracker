@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Exercise, WorkoutSet, Workout } from '../types';
 import { getLastExerciseLog } from '../storage';
+import { EXERCISE_ICONS } from '../exercises';
 
 interface Props {
   exercise: Exercise;
@@ -61,7 +62,10 @@ export default function SetLogger({
         </button>
       </div>
 
-      <h1 className="text-2xl font-bold mb-6 text-center">{exercise}</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">
+        <span className="mr-2">{EXERCISE_ICONS[exercise] || '🏋️'}</span>
+        {exercise}
+      </h1>
 
       {lastSets && (
         <div className="bg-gray-800 rounded-lg p-4 mb-6 max-w-md mx-auto">
